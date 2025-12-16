@@ -1,0 +1,214 @@
+.dashboard {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding-bottom: 40px;
+}
+
+header {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  color: white;
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header h1 {
+  font-size: 2em;
+}
+
+header button {
+  background: white;
+  color: #667eea;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 20px;
+  font-weight: 600;
+}
+
+.link-farm-section {
+  background: white;
+  margin: 30px 40px;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.link-farm-section h2 {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.info-text {
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.farm-id-form {
+  display: flex;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.farm-id-form input {
+  flex: 1;
+  padding: 15px;
+  border: 2px solid #667eea;
+  border-radius: 10px;
+  font-size: 16px;
+  text-transform: uppercase;
+}
+
+.farm-id-form button {
+  padding: 15px 30px;
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.error-message {
+  color: #dc3545;
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+.hint-text {
+  color: #999;
+  font-size: 14px;
+  font-style: italic;
+  margin-top: 10px;
+}
+
+.linked-farms-section {
+  padding: 0 40px;
+}
+
+.linked-farms-section h2 {
+  color: white;
+  margin-bottom: 20px;
+  font-size: 1.8em;
+}
+
+.no-farms {
+  color: white;
+  text-align: center;
+  padding: 40px;
+  font-size: 1.2em;
+  opacity: 0.8;
+}
+
+.farms-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 25px;
+}
+
+.farm-card {
+  background: white;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.farm-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+}
+
+.farm-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.farm-card-header h3 {
+  color: #667eea;
+  font-size: 1.5em;
+  font-weight: 700;
+}
+
+.remove-btn {
+  background: #dc3545;
+  color: white;
+  border: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.farm-card h4 {
+  margin: 0 0 15px 0;
+  color: #333;
+  font-size: 1.2em;
+}
+
+.farm-card p {
+  margin: 8px 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.farm-stats {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 10px;
+  margin: 15px 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.stat {
+  text-align: center;
+}
+
+.stat .label {
+  display: block;
+  font-size: 12px;
+  color: #999;
+  margin-bottom: 5px;
+}
+
+.stat .value {
+  display: block;
+  font-size: 18px;
+  font-weight: 700;
+  color: #667eea;
+}
+
+.irrigation-badge {
+  background: #667eea;
+  color: white;
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 600;
+  margin-top: 10px;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+  font-weight: bold;
+}
+
+.last-watered {
+  font-size: 12px;
+  color: #999;
+  font-style: italic;
+}

@@ -1,37 +1,45 @@
 .field-details {
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #f5f7fa;
   padding-bottom: 40px;
 }
 
 .field-details header {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  color: white;
+  background: white;
+  border-bottom: 1px solid #e1e8ed;
+  color: #1a1a1a;
   padding: 20px 40px;
   display: flex;
   align-items: center;
   gap: 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
 .field-details header button {
-  background: white;
-  color: #667eea;
+  background: #4a5568;
+  color: white;
   border: none;
   padding: 10px 20px;
-  border-radius: 8px;
+  border-radius: 6px;
   cursor: pointer;
   font-weight: 600;
+  transition: background 0.2s;
+}
+
+.field-details header button:hover {
+  background: #2d3748;
 }
 
 .farm-header h1 {
   margin: 0;
   font-size: 2em;
+  font-weight: 600;
+  color: #1a1a1a;
 }
 
 .farm-header p {
   margin: 5px 0 0 0;
-  opacity: 0.9;
+  color: #718096;
 }
 
 .alerts-banner {
@@ -43,18 +51,21 @@
 
 .alerts-banner .alert-item {
   padding: 15px 20px;
-  border-radius: 10px;
-  color: white;
+  border-radius: 6px;
   font-weight: 600;
+  border: 1px solid;
 }
 
 .alerts-banner .alert-item.critical {
-  background: #dc3545;
+  background: #fff5f5;
+  color: #c53030;
+  border-color: #fc8181;
 }
 
 .alerts-banner .alert-item.warning {
-  background: #ffc107;
-  color: #333;
+  background: #fffaf0;
+  color: #744210;
+  border-color: #f6ad55;
 }
 
 .details-container {
@@ -71,122 +82,59 @@
 .stat-box {
   background: white;
   padding: 20px;
-  border-radius: 15px;
+  border-radius: 8px;
+  border: 1px solid #e1e8ed;
   display: flex;
   align-items: center;
   gap: 15px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
 .stat-box.irrigating {
-  background: #667eea;
-  color: white;
+  background: #ebf8ff;
+  border-color: #90cdf4;
 }
 
 .stat-icon {
-  font-size: 2.5em;
+  font-size: 2em;
 }
 
 .stat-label {
-  font-size: 14px;
-  color: #666;
+  font-size: 12px;
+  color: #a0aec0;
   margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .stat-box.irrigating .stat-label {
-  color: rgba(255,255,255,0.9);
+  color: #2c5282;
 }
 
 .stat-value {
-  font-size: 1.8em;
+  font-size: 1.6em;
   font-weight: 700;
   margin: 0;
-  color: #667eea;
+  color: #2d3748;
 }
 
 .stat-box.irrigating .stat-value {
-  color: white;
+  color: #2c5282;
 }
 
 .sensor-map-card {
   background: white;
   padding: 30px;
-  border-radius: 15px;
+  border-radius: 8px;
+  border: 1px solid #e1e8ed;
   margin-bottom: 30px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
 .sensor-map-card h2 {
   margin-top: 0;
-  color: #333;
-}
-
-.sensor-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin: 20px 0;
-}
-
-.grid-row {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-}
-
-.grid-cell {
-  aspect-ratio: 1;
-  border: 2px dashed #ddd;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  background: #f8f9fa;
-}
-
-.grid-cell.has-sensor {
-  border: 2px solid;
-  background: white;
-}
-
-.grid-cell.has-sensor.moisture {
-  border-color: #3b82f6;
-}
-
-.grid-cell.has-sensor.temperature {
-  border-color: #ef4444;
-}
-
-.grid-cell.has-sensor.waterLevel {
-  border-color: #10b981;
-}
-
-.cell-label {
-  position: absolute;
-  top: 5px;
-  left: 8px;
-  font-size: 12px;
-  font-weight: 700;
-  color: #999;
-}
-
-.sensor-indicator {
-  text-align: center;
-  padding: 10px;
-}
-
-.sensor-icon {
-  font-size: 2em;
-  display: block;
-  margin-bottom: 5px;
-}
-
-.sensor-reading {
-  font-size: 14px;
-  font-weight: 700;
-  color: #333;
+  color: #1a1a1a;
+  font-weight: 600;
 }
 
 .map-legend {
@@ -199,36 +147,38 @@
 
 .legend-box {
   display: inline-block;
-  width: 20px;
-  height: 20px;
-  border-radius: 4px;
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
   margin-right: 5px;
   vertical-align: middle;
 }
 
 .legend-box.moisture {
-  background: #3b82f6;
+  background: #4299e1;
 }
 
 .legend-box.temperature {
-  background: #ef4444;
+  background: #f56565;
 }
 
 .legend-box.waterLevel {
-  background: #10b981;
+  background: #48bb78;
 }
 
 .sensor-table-card {
   background: white;
   padding: 30px;
-  border-radius: 15px;
+  border-radius: 8px;
+  border: 1px solid #e1e8ed;
   margin-bottom: 30px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
 .sensor-table-card h2 {
   margin-top: 0;
-  color: #333;
+  color: #1a1a1a;
+  font-weight: 600;
 }
 
 .sensor-table {
@@ -238,43 +188,48 @@
 }
 
 .sensor-table th {
-  background: #f8f9fa;
-  padding: 15px;
+  background: #f7fafc;
+  padding: 12px 15px;
   text-align: left;
   font-weight: 600;
-  border-bottom: 2px solid #dee2e6;
+  border-bottom: 2px solid #e1e8ed;
+  color: #4a5568;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .sensor-table td {
-  padding: 15px;
-  border-bottom: 1px solid #dee2e6;
+  padding: 12px 15px;
+  border-bottom: 1px solid #e1e8ed;
+  color: #2d3748;
 }
 
 .sensor-table tr:hover {
-  background: #f8f9fa;
+  background: #f7fafc;
 }
 
 .value-cell {
   font-weight: 700;
   font-size: 1.1em;
-  color: #667eea;
+  color: #2d3748;
 }
 
 .live-badge {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  background: #28a745;
+  background: #48bb78;
   color: white;
-  padding: 5px 10px;
-  border-radius: 15px;
-  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 11px;
   font-weight: 600;
 }
 
 .pulse-dot {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
   background: white;
   border-radius: 50%;
   animation: pulse 2s infinite;
@@ -294,18 +249,20 @@
 .graph-card {
   background: white;
   padding: 30px;
-  border-radius: 15px;
+  border-radius: 8px;
+  border: 1px solid #e1e8ed;
   margin-bottom: 30px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
 .graph-card h2 {
   margin-top: 0;
-  color: #333;
+  color: #1a1a1a;
+  font-weight: 600;
 }
 
 .master-graph {
-  border: 3px solid #667eea;
+  border: 2px solid #4a5568;
 }
 
 .loading {
@@ -314,5 +271,13 @@
   justify-content: center;
   height: 100vh;
   font-size: 1.5em;
-  color: white;
+  color: #718096;
+}
+
+.no-map {
+  padding: 40px;
+  text-align: center;
+  color: #718096;
+  background: #f7fafc;
+  border-radius: 6px;
 }

@@ -1,284 +1,281 @@
-# Smart Farming MERN Project
+# 🌾 SmartFarm - Intelligent Agriculture Management System
 
-A beginner-friendly MERN stack Smart Farming application for college exam demonstration.
+A modern MERN stack application for precision farming, featuring real-time sensor monitoring, automated irrigation control, and weather integration.
 
-## Features
+## 📋 Overview
+
+SmartFarm is a comprehensive farm management platform that enables farmers to monitor soil conditions, manage multiple fields, track sensor readings in real-time, and make data-driven decisions for optimal crop yields.
+
+## ✨ Features
+
+### Core Functionality
+- **Multi-Field Management**: Monitor and manage multiple farm fields from a single dashboard
+- **Real-Time Sensor Monitoring**: Track soil moisture, temperature, pH levels, and more
+- **Automated Irrigation Control**: Smart irrigation system based on soil moisture thresholds
+- **Weather Integration**: Live weather data for informed decision-making
+- **Interactive Data Visualization**: Charts and graphs powered by Recharts
+- **Geospatial Mapping**: Location-based field visualization using Leaflet maps
+- **Alert System**: Automated alerts for critical sensor readings
+
+### User Experience
+- **Modern UI/UX**: Clean, responsive design with custom theme system
+- **Secure Authentication**: JWT-based login and registration
+- **Real-Time Updates**: Live sensor data with automatic refresh
+- **Mobile Responsive**: Works seamlessly across devices
+
+## 🛠️ Technology Stack
 
 ### Backend
-- Node.js + Express server
-- MongoDB with Mongoose (auto-creates database and collections)
-- User authentication with JWT
-- Field management with moisture monitoring
-- Sensor data ingestion
-- Automatic irrigation system (node-cron)
-- Weather API integration (OpenWeatherMap)
+- **Node.js & Express**: RESTful API server
+- **MongoDB Atlas**: Cloud database for scalable data storage
+- **Mongoose**: ODM for MongoDB
+- **JWT**: Secure authentication
+- **Node-Cron**: Automated task scheduling
+- **OpenWeatherMap API**: Weather data integration
 
 ### Frontend
-- React with Vite
-- Login/Register page
-- Dashboard with field cards
-- Field details with sensor readings
-- Real-time charts using Recharts
-- Weather information display
+- **React 19**: Modern UI framework
+- **Vite**: Fast build tool and dev server
+- **React Router**: Client-side routing
+- **Axios**: HTTP client
+- **Recharts**: Data visualization
+- **Leaflet**: Interactive maps
+- **CSS Variables**: Custom theme system
 
-## Project Structure
+## 📁 Project Structure
 
 ```
 SmartFarm/
 ├── backend/
 │   ├── config/
-│   │   └── db.js              # MongoDB connection
+│   │   └── db.js                 # MongoDB Atlas connection
 │   ├── models/
-│   │   ├── User.js            # User schema
-│   │   ├── Field.js           # Field schema
-│   │   ├── Sensor.js          # Sensor schema
-│   │   └── Reading.js         # Reading schema
+│   │   ├── User.js               # User schema
+│   │   ├── Field.js              # Field/Farm schema
+│   │   ├── Sensor.js             # Sensor schema
+│   │   ├── Reading.js            # Sensor reading schema
+│   │   └── Alert.js              # Alert schema
 │   ├── routes/
-│   │   ├── authRoutes.js      # Login/Register
-│   │   ├── fieldRoutes.js     # Field CRUD
-│   │   ├── sensorRoutes.js    # Sensor operations
-│   │   ├── readingRoutes.js   # Sensor data
-│   │   └── weatherRoutes.js   # Weather API
+│   │   ├── authRoutes.js         # Authentication endpoints
+│   │   ├── fieldRoutes.js        # Field management
+│   │   ├── sensorRoutes.js       # Sensor operations
+│   │   ├── readingRoutes.js      # Sensor data retrieval
+│   │   ├── alertRoutes.js        # Alert management
+│   │   └── weatherRoutes.js      # Weather API integration
 │   ├── utils/
-│   │   └── cronJobs.js        # Auto-irrigation logic
-│   ├── .env                   # Environment variables
-│   ├── package.json
-│   └── server.js              # Entry point
+│   │   ├── cronJobs.js           # Automated irrigation logic
+│   │   └── sensorSimulator.js   # Development data simulation
+│   ├── seedDatabase.js           # Database seeding script
+│   ├── server.js                 # Express server entry point
+│   └── package.json
 │
-└── frontend/
-    ├── src/
-    │   ├── api/
-    │   │   └── axios.js       # API configuration
-    │   ├── components/
-    │   │   ├── WeatherCard.jsx
-    │   │   └── SensorChart.jsx
-    │   ├── pages/
-    │   │   ├── Login.jsx
-    │   │   ├── Dashboard.jsx
-    │   │   └── FieldDetails.jsx
-    │   ├── App.jsx
-    │   └── main.jsx
-    ├── .env
-    └── package.json
+├── frontend/
+│   ├── src/
+│   │   ├── api/
+│   │   │   └── axios.js          # Axios configuration
+│   │   ├── components/
+│   │   │   ├── Navbar.jsx        # Navigation component
+│   │   │   ├── AlertBanner.jsx   # Alert notifications
+│   │   │   ├── SensorChart.jsx   # Data visualization
+│   │   │   ├── SensorMap.jsx     # Leaflet map component
+│   │   │   └── WeatherCard.jsx   # Weather display
+│   │   ├── pages/
+│   │   │   ├── Home.jsx          # Landing page
+│   │   │   ├── Login.jsx         # Login page
+│   │   │   ├── Signup.jsx        # Registration page
+│   │   │   ├── Dashboard.jsx     # Main dashboard
+│   │   │   └── FieldDetails.jsx  # Field detail view
+│   │   ├── themes/
+│   │   │   └── theme.css         # Custom theme variables
+│   │   ├── App.jsx               # Main app component
+│   │   └── main.jsx              # React entry point
+│   ├── package.json
+│   └── vite.config.js
+│
+├── start.sh                      # Startup script
+├── stop.sh                       # Cleanup script
+└── package.json                  # Root package configuration
 ```
 
-## Setup Instructions
+## 🚀 Getting Started
 
 ### Prerequisites
 - Node.js (v14 or higher)
-- MongoDB installed locally OR MongoDB Atlas account
-- OpenWeatherMap API key (free from openweathermap.org)
+- npm or yarn
+- MongoDB Atlas account (or local MongoDB)
 
-### Backend Setup
+### Installation
 
-1. Navigate to backend folder:
+1. **Clone the repository**
 ```bash
-cd backend
+git clone <repository-url>
+cd SmartFarm
 ```
 
-2. Install dependencies:
+2. **Install dependencies**
 ```bash
 npm install
 ```
 
-3. Configure environment variables (`.env` file already created):
+This will install dependencies for both backend and frontend.
+
+3. **Configure environment variables**
+
+Create a `.env` file in the `backend/` directory:
+
 ```env
-PORT=5000
-MONGO_URI=mongodb://localhost:27017/smartfarm
-JWT_SECRET=smartfarm_secret_key_2024
+PORT=5001
+MONGO_URI=your_mongodb_atlas_connection_string
+JWT_SECRET=your_jwt_secret_key
 WEATHER_API_KEY=your_openweathermap_api_key
 ```
 
-**Note:** 
-- For local MongoDB: Use `mongodb://localhost:27017/smartfarm`
-- For MongoDB Atlas: Use your connection string
-- Get Weather API key from: https://openweathermap.org/api
+4. **Seed the database** (Optional)
+```bash
+cd backend
+node seedDatabase.js
+cd ..
+```
 
-4. Start the backend server:
+This creates sample farms, sensors, and initial data.
+
+5. **Start the application**
 ```bash
 npm start
 ```
 
-Or use nodemon for development:
-```bash
-npm run dev
-```
+This runs both backend (port 5001) and frontend (port 5173) concurrently.
 
-Server will run on: http://localhost:5000
+### Default Login Credentials
+- **Email**: admin@smartfarm.com
+- **Password**: admin123
 
-### Frontend Setup
+## 📊 Database Schema
 
-1. Open new terminal and navigate to frontend folder:
-```bash
-cd frontend
-```
+### Collections
 
-2. Install dependencies:
-```bash
-npm install
-```
+#### Users
+- Email, password (hashed), name, role
+- JWT authentication
 
-3. The `.env` file is already configured:
-```env
-VITE_API_URL=http://localhost:5000/api
-```
+#### Fields
+- Farm ID, name, location, area
+- Moisture thresholds for irrigation
+- Sensor associations
 
-4. Start the frontend:
-```bash
-npm run dev
-```
+#### Sensors
+- Type (moisture, temperature, pH, etc.)
+- Field assignment
+- Status and calibration data
 
-Frontend will run on: http://localhost:5173
+#### Readings
+- Sensor ID, timestamp, value, unit
+- Historical data tracking
 
-## MongoDB Important Notes
+#### Alerts
+- Sensor triggers, severity levels
+- Automatic notifications
 
-**The database and collections are automatically created by Mongoose!**
+## 🔧 API Endpoints
 
-- You do NOT need to manually create the database
-- Collections (users, fields, sensors, readings) are auto-created when you first save data
-- Just make sure MongoDB is running locally or use MongoDB Atlas
-
-### Starting Local MongoDB
-
-**Mac/Linux:**
-```bash
-mongod
-```
-
-**Windows:**
-```bash
-"C:\Program Files\MongoDB\Server\<version>\bin\mongod.exe"
-```
-
-### Using MongoDB Atlas (Cloud)
-
-1. Create account at mongodb.com/cloud/atlas
-2. Create a free cluster
-3. Get connection string
-4. Replace MONGO_URI in backend/.env
-
-## How to Use the Application
-
-### 1. Register/Login
-- Open http://localhost:5173
-- Register a new account (farmer or expert)
-- Login with credentials
-
-### 2. Add Fields
-- Click "Add Field" on dashboard
-- Enter field name and location
-- View all your fields in the grid
-
-### 3. Add Sensors
-- Click on a field card
-- Click "Add Sensor" button
-- Sensor will be added to the field
-
-### 4. Submit Sensor Readings
-- Select a sensor from dropdown
-- Enter moisture value (0-100)
-- Submit reading
-- View the chart update automatically
-
-### 5. Auto-Irrigation Feature
-- Cron job runs every 1 minute
-- If field moisture < 20%, irrigation starts automatically
-- Irrigation stops after 2 minutes
-- Status visible on field cards
-
-### 6. Weather Information
-- Enter city name in weather card
-- View temperature, humidity, and conditions
-- Updates automatically
-
-## API Endpoints
-
-### Auth
-- POST `/api/auth/register` - Register new user
-- POST `/api/auth/login` - Login user
+### Authentication
+- `POST /api/auth/register` - User registration
+- `POST /api/auth/login` - User login
 
 ### Fields
-- GET `/api/fields` - Get all fields
-- POST `/api/fields` - Create field
-- PUT `/api/fields/:id` - Update field
+- `GET /api/fields` - Get all fields
+- `POST /api/fields` - Create new field
+- `GET /api/fields/:id` - Get field details
+- `PUT /api/fields/:id` - Update field
+- `DELETE /api/fields/:id` - Delete field
 
 ### Sensors
-- POST `/api/sensors` - Create sensor
-- GET `/api/sensors/:fieldId` - Get sensors by field
+- `GET /api/sensors` - Get all sensors
+- `POST /api/sensors` - Create sensor
+- `GET /api/sensors/field/:fieldId` - Get field sensors
 
 ### Readings
-- POST `/api/readings` - Submit sensor reading
-- GET `/api/readings/:sensorId` - Get readings
+- `GET /api/readings/sensor/:sensorId` - Get sensor readings
+- `POST /api/readings` - Add new reading
 
 ### Weather
-- GET `/api/weather/:city` - Get weather data
+- `GET /api/weather/:location` - Get weather data
 
-## Technologies Used
+## 🎨 Theme System
 
-### Backend
-- Express.js - Web framework
-- Mongoose - MongoDB ODM
-- bcryptjs - Password hashing
-- jsonwebtoken - Authentication
-- node-cron - Scheduled tasks
-- axios - HTTP client
-- dotenv - Environment variables
-- cors - Cross-origin requests
+The application uses CSS variables for consistent theming:
 
-### Frontend
-- React 19 - UI library
-- React Router - Navigation
-- Axios - API calls
-- Recharts - Data visualization
-- Vite - Build tool
+```css
+--primary-green: #2d5016
+--accent-green: #4a7c2c
+--bg-white: #ffffff
+--text-dark: #2c3e50
+```
 
-## Key Concepts for Viva
+All colors, spacing, shadows, and transitions are centralized in `/frontend/src/themes/theme.css`.
 
-1. **MERN Stack**: MongoDB, Express, React, Node.js
-2. **RESTful API**: CRUD operations with proper HTTP methods
-3. **Authentication**: JWT tokens for secure access
-4. **MongoDB**: NoSQL database with Mongoose schemas
-5. **Cron Jobs**: Scheduled tasks for automation
-6. **API Integration**: Third-party weather service
-7. **React Hooks**: useState, useEffect for state management
-8. **Component-based Architecture**: Reusable UI components
+## 🔄 Automated Features
 
-## Troubleshooting
+### Irrigation Control
+- Monitors soil moisture every minute
+- Triggers irrigation when below threshold
+- Automatic system deactivation at safe levels
 
-### MongoDB Connection Error
-- Check if MongoDB is running: `mongod`
-- Verify MONGO_URI in backend/.env
+### Sensor Simulation
+- Generates realistic sensor data during development
+- Simulates moisture, temperature, and pH variations
 
-### Weather API Not Working
-- Get API key from openweathermap.org
-- Update WEATHER_API_KEY in backend/.env
-- Note: Free tier may take 1-2 hours to activate
+## 📱 Screenshots
 
-### Port Already in Use
-- Backend: Change PORT in backend/.env
-- Frontend: Vite will automatically suggest alternate port
+The application features:
+- Responsive landing page with hero section
+- Interactive dashboard with farm cards
+- Detailed field view with sensor charts
+- Real-time alerts and notifications
+- Weather integration panel
 
-### CORS Error
-- Ensure backend is running on port 5000
-- Check VITE_API_URL in frontend/.env
+## 🐛 Development
 
-## Demo Flow for Exam
+### Running in Development Mode
 
-1. Show project structure
-2. Explain MongoDB auto-creation feature
-3. Start backend and frontend
-4. Register a user
-5. Add a field
-6. Add sensor to field
-7. Submit readings and show chart
-8. Demonstrate auto-irrigation (set moisture < 20)
-9. Show weather API integration
-10. Explain key code sections
+**Backend:**
+```bash
+cd backend
+npm run dev
+```
 
-## License
+**Frontend:**
+```bash
+cd frontend
+npm run dev
+```
 
-This project is for educational purposes only.
+### Building for Production
+
+```bash
+cd frontend
+npm run build
+```
+
+## 🤝 Contributing
+
+This is an educational project. Feel free to fork and enhance!
+
+## 📄 License
+
+This project is created for educational purposes.
+
+## 👨‍💻 Author
+
+Developed as a college project demonstrating full-stack MERN development skills.
+
+## 🙏 Acknowledgments
+
+- OpenWeatherMap for weather API
+- MongoDB Atlas for cloud database
+- React and Vite communities
+- Leaflet for mapping capabilities
 
 ---
-**Created by:** Devdarshan
-**Purpose:** College Exam Demonstration
+
+**Note**: This application demonstrates modern web development practices including RESTful API design, responsive UI, real-time data handling, and cloud database integration.

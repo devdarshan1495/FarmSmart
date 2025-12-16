@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../api/axios';
+import Navbar from '../components/Navbar';
 import AlertBanner from '../components/AlertBanner';
 import './Dashboard.css';
 
@@ -88,74 +89,108 @@ function Dashboard() {
 
   return (
     <div className="dashboard">
-      <header>
-        <h1>🌱 Smart Farm Monitor</h1>
-        <div>
-          <span>Welcome, {user?.name}</span>
-          <button onClick={handleLogout}>Logout</button>
-        </div>
-      </header>
+      <Navbar />
 
-      <AlertBanner alerts={alerts} />
-
-      <div className="link-farm-section">
-        <h2>Link to a Farm</h2>
-        <p className="info-text">Enter a Farm ID to monitor its sensors and data</p>
-        <form onSubmit={handleLinkFarm} className="farm-id-form">
-          <input
-            type="text"
-            placeholder="Enter Farm ID (e.g., FARM001)"
-            value={farmId}
-            onChange={(e) => setFarmId(e.target.value)}
-            required
-          />
-          <button type="submit">Link Farm</button>
-        </form>
-        {error && <p className="error-message">{error}</p>}
-        <p className="hint-text">Available Farms: FARM001, FARM002, FARM003</p>
-      </div>
-
-      <div className="linked-farms-section">
-        <h2>Your Linked Farms</h2>
-        {linkedFarms.length === 0 ? (
-          <p className="no-farms">No farms linked yet. Enter a Farm ID above to get started.</p>
-        ) : (
-          <div className="farms-grid">
-            {linkedFarms.map((farm) => (
-              <div key={farm.farmId} className="farm-card" onClick={() => navigate(`/field/${farm._id}`)}>
-                <div className="farm-card-header">
-                  <h3>{farm.farmId}</h3>
-                  <button 
-                    className="remove-btn" 
-                    onClick={(e) => { e.stopPropagation(); handleRemoveFarm(farm.farmId); }}
-                  >
-                    ✕
-                  </button>
-                </div>
-                <h4>{farm.name}</h4>
-                <p>📍 {farm.location}</p>
-                <p>📐 {farm.area}</p>
-                <div className="farm-stats">
-                  <div className="stat">
-                    <span className="label">Moisture</span>
-                    <span className="value">{farm.moisture?.toFixed(1) || 0}%</span>
-                  </div>
-                  <div className="stat">
-                    <span className="label">Temp</span>
-                    <span className="value">{farm.temperature?.toFixed(1) || 0}°C</span>
-                  </div>
-                  <div className="stat">
-                    <span className="label">Water</span>
-                    <span className="value">{farm.waterLevel || 'medium'}</span>
-                  </div>
-                </div>
-                {farm.irrigating && (
-                  <div className="irrigation-badge">💧 Irrigating...</div>
-                )}
-              </div>
-            ))}
+      <div className="dashboard-container">
+        <div className="dashboard-header">
+          <div>
+            <h1>Dashboard</h1>
+            <p>Monitor and manage your linked farms</p>
           </div>
-        )}
+          <div className="user-info">
+            <span className="user-name">👤 {user?.name}</span>
+            <span className="user-role">{user?.role}</span>
+          </div>
+        </div>
+
+        <AlertBanner alerts={alerts} />
+
+        <div className="link-farm-section">
+          <div className="section-icon">🔗</div>
+          <div className="section-content">
+            <h2>Link to a Farm</h2>
+            <p className="info-text">Enter a Farm ID to monitor its sensors and data in real-time</p>
+            <form onSubmit={handleLinkFarm} className="farm-id-form">
+              <div className="input-group">
+                <input
+                  type="text"
+                  placeholder="Enter Farm ID (e.g., FARM001)"
+                  value={farmId}
+                  onChange={(e) => setFarmId(e.target.value)}
+                  required
+                />
+                <button type="submit">Link Farm</button>
+              </div>
+              {error && <p className="error-message">⚠️ {error}</p>}
+            </form>
+            <div className="available-farms">
+              <span className="label">Available Farms:</span>
+              <div className="farm-badges">
+                <span className="farm-badge" onClick={() => setFarmId('FARM001')}>FARM001</span>
+                <span className="farm-badge" onClick={() => setFarmId('FARM002')}>FARM002</span>
+                <span className="farm-badge" onClick={() => setFarmId('FARM003')}>FARM003</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="linked-farms-section">
+          <h2>Your Linked Farms ({linkedFarms.length})</h2>
+          {linkedFarms.length === 0 ? (
+            <div className="no-farms">
+              <div className="no-farms-icon">🏡</div>
+              <p>No farms linked yet</p>
+              <span>Enter a Farm ID above to get started monitoring</span>
+            </div>
+          ) : (
+            <div className="farms-grid">
+              {linkedFarms.map((farm) => (
+                <div key={farm.farmId} className="farm-card" onClick={() => navigate(`/field/${farm._id}`)}>
+                  <div className="farm-card-header">
+                    <div className="farm-id-badge">{farm.farmId}</div>
+                    <button 
+                      className="remove-btn" 
+                      onClick={(e) => { e.stopPropagation(); handleRemoveFarm(farm.farmId); }}
+                      title="Remove farm"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                  <h3>{farm.name}</h3>
+                  <p className="location">📍 {farm.location}</p>
+                  <p className="area">📏 {farm.area}</p>
+                  
+                  <div className="farm-stats">
+                    <div className="stat">
+                      <span className="stat-icon">💧</span>
+                      <span className="stat-value">{farm.moisture?.toFixed(1) || 0}%</span>
+                      <span className="stat-label">Moisture</span>
+                    </div>
+                    <div className="stat">
+                      <span className="stat-icon">🌡️</span>
+                      <span className="stat-value">{farm.temperature?.toFixed(1) || 0}°C</span>
+                      <span className="stat-label">Temperature</span>
+                    </div>
+                    <div className="stat">
+                      <span className="stat-icon">💦</span>
+                      <span className="stat-value">{farm.waterLevel || 'medium'}</span>
+                      <span className="stat-label">Water Level</span>
+                    </div>
+                  </div>
+                  
+                  {farm.irrigating && (
+                    <div className="irrigation-badge">
+                      <span className="pulse-dot"></span>
+                      Irrigation Active
+                    </div>
+                  )}
+                  
+                  <div className="view-details">View Details →</div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

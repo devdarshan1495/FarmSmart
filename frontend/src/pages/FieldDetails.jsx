@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import api from '../api/axios';
 import SensorChart from '../components/SensorChart';
 import WeatherCard from '../components/WeatherCard';
+import SensorMap from '../components/SensorMap';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import './FieldDetails.css';
 
@@ -136,7 +137,7 @@ function FieldDetails() {
         <button onClick={() => navigate('/dashboard')}>← Back</button>
         <div className="farm-header">
           <h1>{field.farmId} - {field.name}</h1>
-          <p>📍 {field.location} | 📐 {field.area}</p>
+          <p>{field.location} | {field.area}</p>
         </div>
       </header>
 
@@ -144,7 +145,7 @@ function FieldDetails() {
         <div className="alerts-banner">
           {alerts.slice(0, 3).map((alert) => (
             <div key={alert._id} className={`alert-item ${alert.severity}`}>
-              {alert.severity === 'critical' && '🚨'} {alert.message}
+              {alert.message}
             </div>
           ))}
         </div>
@@ -153,28 +154,28 @@ function FieldDetails() {
       <div className="details-container">
         <div className="stats-row">
           <div className="stat-box">
-            <span className="stat-icon">💧</span>
+            <span className="stat-icon">▼</span>
             <div>
               <p className="stat-label">Avg Moisture</p>
               <p className="stat-value">{field.moisture?.toFixed(1) || 0}%</p>
             </div>
           </div>
           <div className="stat-box">
-            <span className="stat-icon">🌡️</span>
+            <span className="stat-icon">●</span>
             <div>
               <p className="stat-label">Avg Temperature</p>
               <p className="stat-value">{field.temperature?.toFixed(1) || 0}°C</p>
             </div>
           </div>
           <div className="stat-box">
-            <span className="stat-icon">🚰</span>
+            <span className="stat-icon">■</span>
             <div>
               <p className="stat-label">Water Level</p>
               <p className="stat-value">{field.waterLevel}</p>
             </div>
           </div>
           <div className={`stat-box ${field.irrigating ? 'irrigating' : ''}`}>
-            <span className="stat-icon">💦</span>
+            <span className="stat-icon">◆</span>
             <div>
               <p className="stat-label">Irrigation</p>
               <p className="stat-value">{field.irrigating ? 'Active' : 'Inactive'}</p>
@@ -183,33 +184,8 @@ function FieldDetails() {
         </div>
 
         <div className="sensor-map-card">
-          <h2>🗺️ Sensor Position Map</h2>
-          <div className="sensor-grid">
-            {sensorMap.map((row, rowIdx) => (
-              <div key={rowIdx} className="grid-row">
-                {row.map((sensor, colIdx) => (
-                  <div 
-                    key={`${rowIdx}-${colIdx}`} 
-                    className={`grid-cell ${sensor ? 'has-sensor' : ''}`}
-                  >
-                    <div className="cell-label">{String.fromCharCode(65 + rowIdx)}{colIdx + 1}</div>
-                    {sensor && (
-                      <div className={`sensor-indicator ${sensor.sensorType}`}>
-                        <span className="sensor-icon">
-                          {sensor.sensorType === 'moisture' && '💧'}
-                          {sensor.sensorType === 'temperature' && '🌡️'}
-                          {sensor.sensorType === 'waterLevel' && '🚰'}
-                        </span>
-                        <span className="sensor-reading">
-                          {sensor.lastValue?.toFixed(1)}{sensor.unit}
-                        </span>
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            ))}
-          </div>
+          <h2>Live Sensor Map - Kharghar, Navi Mumbai</h2>
+          <SensorMap sensors={sensors} />
           <div className="map-legend">
             <span><span className="legend-box moisture"></span> Moisture</span>
             <span><span className="legend-box temperature"></span> Temperature</span>
@@ -220,9 +196,6 @@ function FieldDetails() {
         {Object.entries(sensorsByType).map(([type, typeSensors]) => (
           <div key={type} className="sensor-table-card">
             <h2>
-              {type === 'moisture' && '💧'} 
-              {type === 'temperature' && '🌡️'} 
-              {type === 'waterLevel' && '🚰'} 
               {type.charAt(0).toUpperCase() + type.slice(1)} Sensors
             </h2>
             <table className="sensor-table">
@@ -256,7 +229,7 @@ function FieldDetails() {
 
         {Object.entries(sensorsByType).map(([type, typeSensors]) => (
           <div key={`graph-${type}`} className="graph-card">
-            <h2>📊 {type.charAt(0).toUpperCase() + type.slice(1)} Trend (All Sensors)</h2>
+            <h2>{type.charAt(0).toUpperCase() + type.slice(1)} Trend (All Sensors)</h2>
             <ResponsiveContainer width="100%" height={300}>
               <LineChart>
                 <CartesianGrid strokeDasharray="3 3" />
@@ -293,7 +266,7 @@ function FieldDetails() {
 
         {sensors.length > 0 && masterData.length > 0 && (
           <div className="graph-card master-graph">
-            <h2>📈 Master Graph - All Sensors Combined</h2>
+            <h2>Master Graph - All Sensors Combined</h2>
             <ResponsiveContainer width="100%" height={400}>
               <LineChart data={masterData}>
                 <CartesianGrid strokeDasharray="3 3" />

@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
 const Field = require('./models/Field');
 const Sensor = require('./models/Sensor');
+require('dotenv').config();
 
-// Connect to MongoDB
-mongoose.connect('mongodb://localhost:27017/smartfarm')
-  .then(() => console.log('MongoDB connected for seeding'))
+// Connect to MongoDB Atlas
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log('✅ MongoDB Atlas connected for seeding'))
   .catch(err => console.error('MongoDB connection error:', err));
 
 const seedData = async () => {

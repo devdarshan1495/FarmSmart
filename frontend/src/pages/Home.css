@@ -149,6 +149,18 @@
   background: var(--border-gray-200);
 }
 
+.preview-dot-red {
+  background: #ff5f56;
+}
+
+.preview-dot-yellow {
+  background: #ffbd2e;
+}
+
+.preview-dot-green {
+  background: #27c93f;
+}
+
 .preview-content {
   display: grid;
   grid-template-columns: repeat(2, 1fr);

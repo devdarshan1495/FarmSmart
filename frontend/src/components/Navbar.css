@@ -99,6 +99,22 @@
   box-shadow: var(--shadow-green);
 }
 
+.nav-btn-admin {
+  background: var(--accent-green);
+  color: var(--text-dark);
+  border: 2px solid var(--accent-green);
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(94, 168, 68, 0.4);
+}
+
+.nav-btn-admin:hover {
+  background: var(--primary-green);
+  color: white;
+  border-color: var(--primary-green);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(45, 80, 22, 0.5);
+}
+
 .nav-btn-logout {
   background: var(--bg-white);
   color: var(--status-error);

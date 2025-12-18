@@ -1,14 +1,39 @@
 import { Link, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 import './Navbar.css';
 
 function Navbar() {
   const navigate = useNavigate();
-  const user = JSON.parse(localStorage.getItem('user') || 'null');
+  const user = JSON.parse(sessionStorage.getItem('user') || 'null');
+
+  // Session management - logout on tab close
+  useEffect(() => {
+    // Transfer from localStorage to sessionStorage on mount (if exists)
+    const localUser = localStorage.getItem('user');
+    const localToken = localStorage.getItem('token');
+    
+    if (localUser && localToken && !sessionStorage.getItem('user')) {
+      sessionStorage.setItem('user', localUser);
+      sessionStorage.setItem('token', localToken);
+      localStorage.removeItem('user');
+      localStorage.removeItem('token');
+    }
+
+    // Clear session on tab close
+    const handleBeforeUnload = () => {
+      sessionStorage.clear();
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, []);
 
   const handleLogout = () => {
+    // Only clear auth data, keep linkedFarms in localStorage
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('user');
     localStorage.removeItem('token');
     localStorage.removeItem('user');
-    localStorage.removeItem('linkedFarms');
     navigate('/');
   };
 
@@ -22,7 +47,14 @@ function Navbar() {
         <div className="navbar-menu">
           {user ? (
             <>
-              <Link to="/dashboard" className="nav-link">Dashboard</Link>
+              {user.role !== 'expert' && (
+                <Link to="/dashboard" className="nav-link">Dashboard</Link>
+              )}
+              {user.role === 'expert' && (
+                <Link to="/admin/dashboard" className="nav-btn nav-btn-admin">
+                  Admin Panel
+                </Link>
+              )}
               <button onClick={handleLogout} className="nav-btn nav-btn-logout">
                 Logout
               </button>

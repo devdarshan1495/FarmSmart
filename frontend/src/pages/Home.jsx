@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { Radio, Droplets, Map, TrendingUp, Bell, Layers } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import './Home.css';
 
@@ -11,7 +12,7 @@ function Home() {
         <div className="hero-container">
           <div className="hero-content">
             <h1 className="hero-title">
-              The Future of Agriculture: <span className="gradient-text">AI at Your Service</span>
+              Smart Farm Monitoring: <span className="gradient-text">Track From Anywhere</span>
             </h1>
             <p className="hero-description">
               Monitor your farms with real-time IoT sensors. Track moisture, temperature, 
@@ -44,23 +45,23 @@ function Home() {
           <div className="hero-image">
             <div className="dashboard-preview">
               <div className="preview-header">
-                <div className="preview-dot"></div>
-                <div className="preview-dot"></div>
-                <div className="preview-dot"></div>
+                <div className="preview-dot preview-dot-red"></div>
+                <div className="preview-dot preview-dot-yellow"></div>
+                <div className="preview-dot preview-dot-green"></div>
               </div>
               <div className="preview-content">
                 <div className="preview-card">
-                  <div className="card-icon">📊</div>
+                  <div className="card-icon"><TrendingUp size={24} strokeWidth={1.5} /></div>
                   <div className="card-title">Analytics</div>
                   <div className="card-graph"></div>
                 </div>
                 <div className="preview-card">
-                  <div className="card-icon">💧</div>
+                  <div className="card-icon"><Droplets size={24} strokeWidth={1.5} /></div>
                   <div className="card-title">Moisture</div>
                   <div className="card-value">45%</div>
                 </div>
                 <div className="preview-card">
-                  <div className="card-icon">🌡️</div>
+                  <div className="card-icon"><Radio size={24} strokeWidth={1.5} /></div>
                   <div className="card-title">Temperature</div>
                   <div className="card-value">28°C</div>
                 </div>
@@ -77,7 +78,7 @@ function Home() {
           
           <div className="features-grid">
             <div className="feature-card">
-              <div className="feature-icon">📡</div>
+              <div className="feature-icon"><Radio size={40} strokeWidth={1.5} /></div>
               <h3 className="feature-title">Real-time Monitoring</h3>
               <p className="feature-description">
                 Track soil moisture, temperature, and water levels with IoT sensors updating every 30 seconds.
@@ -85,7 +86,7 @@ function Home() {
             </div>
             
             <div className="feature-card">
-              <div className="feature-icon">💧</div>
+              <div className="feature-icon"><Droplets size={40} strokeWidth={1.5} /></div>
               <h3 className="feature-title">Auto Irrigation</h3>
               <p className="feature-description">
                 Automatic irrigation triggers when moisture drops below 30%. Save water and optimize crop health.
@@ -93,7 +94,7 @@ function Home() {
             </div>
             
             <div className="feature-card">
-              <div className="feature-icon">🗺️</div>
+              <div className="feature-icon"><Map size={40} strokeWidth={1.5} /></div>
               <h3 className="feature-title">Interactive Maps</h3>
               <p className="feature-description">
                 Visualize sensor positions on interactive maps with real GPS coordinates from Kharghar.
@@ -101,7 +102,7 @@ function Home() {
             </div>
             
             <div className="feature-card">
-              <div className="feature-icon">📈</div>
+              <div className="feature-icon"><TrendingUp size={40} strokeWidth={1.5} /></div>
               <h3 className="feature-title">Analytics & Graphs</h3>
               <p className="feature-description">
                 View historical data trends with beautiful charts. Track individual sensors or compare all at once.
@@ -109,7 +110,7 @@ function Home() {
             </div>
             
             <div className="feature-card">
-              <div className="feature-icon">🔔</div>
+              <div className="feature-icon"><Bell size={40} strokeWidth={1.5} /></div>
               <h3 className="feature-title">Smart Alerts</h3>
               <p className="feature-description">
                 Get instant notifications for critical conditions like low moisture or irrigation status changes.
@@ -117,7 +118,7 @@ function Home() {
             </div>
             
             <div className="feature-card">
-              <div className="feature-icon">🚀</div>
+              <div className="feature-icon"><Layers size={40} strokeWidth={1.5} /></div>
               <h3 className="feature-title">Multiple Farms</h3>
               <p className="feature-description">
                 Link and monitor multiple farms from one dashboard. Switch between farms effortlessly.

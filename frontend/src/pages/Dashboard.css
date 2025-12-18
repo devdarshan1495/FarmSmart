@@ -353,6 +353,7 @@
   flex-direction: column;
   align-items: center;
   gap: var(--spacing-xs);
+  overflow: hidden;
 }
 
 .stat-icon {
@@ -363,6 +364,9 @@
   font-size: 1.25rem;
   font-weight: var(--font-bold);
   color: var(--text-primary);
+  word-break: break-word;
+  text-align: center;
+  max-width: 100%;
 }
 
 .stat-label {
@@ -371,6 +375,8 @@
   text-transform: uppercase;
   letter-spacing: 0.5px;
   font-weight: var(--font-medium);
+  text-align: center;
+  word-break: break-word;
 }
 
 .irrigation-badge {

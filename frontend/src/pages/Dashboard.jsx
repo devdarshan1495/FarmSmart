@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Droplet, Thermometer, Waves, MapPin, Maximize2, User, Link as LinkIcon } from 'lucide-react';
 import api from '../api/axios';
 import Navbar from '../components/Navbar';
 import AlertBanner from '../components/AlertBanner';
@@ -10,21 +11,24 @@ function Dashboard() {
   const [linkedFarms, setLinkedFarms] = useState([]);
   const [user, setUser] = useState(null);
   const [alerts, setAlerts] = useState([]);
+  const [availableFarms, setAvailableFarms] = useState([]);
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
-    const userData = JSON.parse(localStorage.getItem('user'));
+    const userData = JSON.parse(sessionStorage.getItem('user') || localStorage.getItem('user'));
     if (!userData) {
-      navigate('/');
+      navigate('/login');
       return;
     }
     setUser(userData);
     
-    const savedFarms = JSON.parse(localStorage.getItem('linkedFarms') || '[]');
+    // Load linked farms from localStorage (persists across sessions)
+    const savedFarms = JSON.parse(localStorage.getItem(`linkedFarms_${userData.email}`) || '[]');
     setLinkedFarms(savedFarms);
     
     fetchAlerts();
+    fetchAvailableFarms();
     
     const interval = setInterval(() => {
       fetchAlerts();
@@ -54,6 +58,19 @@ function Dashboard() {
     }
   };
 
+  const fetchAvailableFarms = async () => {
+    try {
+      const response = await api.get('/fields');
+      // Get the 3 most recently created farms
+      const sortedFarms = response.data
+        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+        .slice(0, 3);
+      setAvailableFarms(sortedFarms);
+    } catch (error) {
+      console.error('Error fetching available farms:', error);
+    }
+  };
+
   const handleLinkFarm = async (e) => {
     e.preventDefault();
     setError('');
@@ -69,21 +86,26 @@ function Dashboard() {
       
       const updatedFarms = [...linkedFarms, farmData];
       setLinkedFarms(updatedFarms);
-      localStorage.setItem('linkedFarms', JSON.stringify(updatedFarms));
+      localStorage.setItem(`linkedFarms_${user.email}`, JSON.stringify(updatedFarms));
       setFarmId('');
     } catch (error) {
-      setError('Invalid Farm ID. Try: FARM001, FARM002, or FARM003');
+      const farmIds = availableFarms.map(f => f.farmId).join(', ');
+      setError(`Invalid Farm ID. ${farmIds ? `Try: ${farmIds}` : 'Please check the farm ID'}`);
     }
   };
 
   const handleRemoveFarm = (farmIdToRemove) => {
     const updatedFarms = linkedFarms.filter(f => f.farmId !== farmIdToRemove);
     setLinkedFarms(updatedFarms);
-    localStorage.setItem('linkedFarms', JSON.stringify(updatedFarms));
+    localStorage.setItem(`linkedFarms_${user.email}`, JSON.stringify(updatedFarms));
   };
 
   const handleLogout = () => {
-    localStorage.clear();
+    // Only clear auth data, keep linkedFarms in localStorage
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('user');
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
     navigate('/');
   };
 
@@ -98,7 +120,7 @@ function Dashboard() {
             <p>Monitor and manage your linked farms</p>
           </div>
           <div className="user-info">
-            <span className="user-name">👤 {user?.name}</span>
+            <span className="user-name"><User size={16} strokeWidth={2} /> {user?.name}</span>
             <span className="user-role">{user?.role}</span>
           </div>
         </div>
@@ -106,7 +128,7 @@ function Dashboard() {
         <AlertBanner alerts={alerts} />
 
         <div className="link-farm-section">
-          <div className="section-icon">🔗</div>
+          <div className="section-icon"><LinkIcon size={32} strokeWidth={1.5} /></div>
           <div className="section-content">
             <h2>Link to a Farm</h2>
             <p className="info-text">Enter a Farm ID to monitor its sensors and data in real-time</p>
@@ -121,14 +143,20 @@ function Dashboard() {
                 />
                 <button type="submit">Link Farm</button>
               </div>
-              {error && <p className="error-message">⚠️ {error}</p>}
+              {error && <p className="error-message">! {error}</p>}
             </form>
             <div className="available-farms">
               <span className="label">Available Farms:</span>
               <div className="farm-badges">
-                <span className="farm-badge" onClick={() => setFarmId('FARM001')}>FARM001</span>
-                <span className="farm-badge" onClick={() => setFarmId('FARM002')}>FARM002</span>
-                <span className="farm-badge" onClick={() => setFarmId('FARM003')}>FARM003</span>
+                {availableFarms.map(farm => (
+                  <span 
+                    key={farm._id} 
+                    className="farm-badge" 
+                    onClick={() => setFarmId(farm.farmId)}
+                  >
+                    {farm.farmId}
+                  </span>
+                ))}
               </div>
             </div>
           </div>
@@ -138,7 +166,7 @@ function Dashboard() {
           <h2>Your Linked Farms ({linkedFarms.length})</h2>
           {linkedFarms.length === 0 ? (
             <div className="no-farms">
-              <div className="no-farms-icon">🏡</div>
+              <div className="no-farms-icon">▢</div>
               <p>No farms linked yet</p>
               <span>Enter a Farm ID above to get started monitoring</span>
             </div>
@@ -157,22 +185,22 @@ function Dashboard() {
                     </button>
                   </div>
                   <h3>{farm.name}</h3>
-                  <p className="location">📍 {farm.location}</p>
-                  <p className="area">📏 {farm.area}</p>
+                  <p className="location"><MapPin size={14} strokeWidth={2} /> {farm.location}</p>
+                  <p className="area"><Maximize2 size={14} strokeWidth={2} /> {farm.area}</p>
                   
                   <div className="farm-stats">
                     <div className="stat">
-                      <span className="stat-icon">💧</span>
+                      <span className="stat-icon"><Droplet size={24} strokeWidth={1.5} /></span>
                       <span className="stat-value">{farm.moisture?.toFixed(1) || 0}%</span>
                       <span className="stat-label">Moisture</span>
                     </div>
                     <div className="stat">
-                      <span className="stat-icon">🌡️</span>
+                      <span className="stat-icon"><Thermometer size={24} strokeWidth={1.5} /></span>
                       <span className="stat-value">{farm.temperature?.toFixed(1) || 0}°C</span>
                       <span className="stat-label">Temperature</span>
                     </div>
                     <div className="stat">
-                      <span className="stat-icon">💦</span>
+                      <span className="stat-icon"><Waves size={24} strokeWidth={1.5} /></span>
                       <span className="stat-value">{farm.waterLevel || 'medium'}</span>
                       <span className="stat-label">Water Level</span>
                     </div>

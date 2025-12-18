@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const Field = require('./models/Field');
 const Sensor = require('./models/Sensor');
+const User = require('./models/User');
+const bcrypt = require('bcryptjs');
 require('dotenv').config();
 
 // Connect to MongoDB Atlas
@@ -13,7 +15,28 @@ const seedData = async () => {
     // Clear existing data
     await Field.deleteMany({});
     await Sensor.deleteMany({});
+    await User.deleteMany({});
     console.log('Cleared existing data');
+
+    // Create admin user (expert role)
+    const adminPassword = await bcrypt.hash('admin123', 10);
+    await User.create({
+      name: 'Admin User',
+      email: 'admin@smartfarm.com',
+      password: adminPassword,
+      role: 'expert'
+    });
+    console.log('Created admin user (admin@smartfarm.com / admin123)');
+
+    // Create regular farmer user
+    const farmerPassword = await bcrypt.hash('farmer123', 10);
+    await User.create({
+      name: 'John Farmer',
+      email: 'farmer@smartfarm.com',
+      password: farmerPassword,
+      role: 'farmer'
+    });
+    console.log('Created farmer user (farmer@smartfarm.com / farmer123)');
 
     // Create 3 farms in Kharghar, India with different configurations
     const farm1 = await Field.create({
